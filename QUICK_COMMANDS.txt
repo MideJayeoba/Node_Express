@@ -1,0 +1,85 @@
+# Quick Commands to Create PostgreSQL User Table
+
+# ============================================
+# OPTION 1: Using psql Command Line
+# ============================================
+
+# 1. Open PostgreSQL command line
+psql -U postgres
+
+# 2. Create database
+CREATE DATABASE node_express_db;
+
+# 3. Connect to the database
+\c node_express_db
+
+# 4. Create users table
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    age INTEGER CHECK (age >= 0 AND age <= 150),
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+# 5. Verify table was created
+\dt
+
+# 6. View table structure
+\d users
+
+# 7. Insert sample data
+INSERT INTO users (username, email, password, first_name, last_name, age)
+VALUES ('john_doe', 'john@example.com', 'password123', 'John', 'Doe', 30);
+
+# 8. View all users
+SELECT * FROM users;
+
+# 9. Exit
+\q
+
+
+# ============================================
+# OPTION 2: Using Node.js Setup Script
+# ============================================
+
+# 1. First, create the database in psql
+psql -U postgres -c "CREATE DATABASE node_express_db;"
+
+# 2. Update db.js with your credentials
+
+# 3. Run the setup script
+node setupDatabase.js
+
+
+# ============================================
+# OPTION 3: Run SQL file directly
+# ============================================
+
+# Windows PowerShell
+Get-Content setup_database.sql | psql -U postgres -d node_express_db
+
+# Or in psql
+psql -U postgres -d node_express_db -f setup_database.sql
+
+
+# ============================================
+# VERIFICATION COMMANDS
+# ============================================
+
+# Check if database exists
+psql -U postgres -c "\l"
+
+# Check if table exists
+psql -U postgres -d node_express_db -c "\dt"
+
+# View all users
+psql -U postgres -d node_express_db -c "SELECT * FROM users;"
+
+# Count users
+psql -U postgres -d node_express_db -c "SELECT COUNT(*) FROM users;"

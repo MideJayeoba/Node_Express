@@ -18,29 +18,29 @@ A simple Express.js REST API for managing items with full CRUD operations.
 ### Prerequisites
 
 - Node.js installed on your machine
-- npm (Node Package Manager)
+- pnpm (Package Manager)
 
 ### Installation
 
 1. Clone the repository
 2. Install dependencies:
    ```bash
-   npm install
+   pnpm install
    ```
 
 ### Running the Application
 
 **Development mode (with auto-restart):**
-
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 **Production mode:**
-
 ```bash
-npm start
+pnpm start
 ```
+
+The server will start on `http://localhost:3000`
 
 The server will start on `http://localhost:3000`
 
