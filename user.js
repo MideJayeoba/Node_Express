@@ -14,6 +14,24 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
+// Create table on startup (if it doesn't exist)
+async function initializeDatabase() {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS users (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100),
+        email VARCHAR(100)
+      )
+    `);
+    console.log('✅ Database initialized');
+  } catch (error) {
+    console.error('❌ Database initialization error:', error.message);
+  }
+}
+
+initializeDatabase();
+
 // Routes
 app.get('/users', async (req, res) => {
   try {
